@@ -1,5 +1,12 @@
 import Image from "next/image";
-import { ClerkLoaded, ClerkLoading, SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import {
+  ClerkLoaded,
+  ClerkLoading,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/nextjs";
 import { Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -18,11 +25,17 @@ export const Header = () => {
         </ClerkLoading>
         <ClerkLoaded>
           <SignedIn>
-            <UserButton afterSignOutUrl="/"/>
+            <UserButton afterSignOutUrl="/" />
           </SignedIn>
           <SignedOut>
-            <SignInButton mode="modal">
-                <Button size="lg" variant="ghost">LOGIN</Button>
+            <SignInButton
+              mode="modal"
+              fallbackRedirectUrl="/learn"
+              signUpFallbackRedirectUrl="/learn"
+            >
+              <Button size="lg" variant="ghost">
+                LOGIN
+              </Button>
             </SignInButton>
           </SignedOut>
         </ClerkLoaded>

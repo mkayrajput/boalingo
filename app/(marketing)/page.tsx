@@ -28,12 +28,20 @@ export default function Home() {
           </ClerkLoading>
           <ClerkLoaded>
             <SignedOut>
-              <SignUpButton mode="modal">
+              <SignUpButton
+                mode="modal"
+                fallbackRedirectUrl="/learn"
+                signInFallbackRedirectUrl="/learn"
+              >
                 <Button size="lg" variant="secondary" className="w-full">
                   Get Started
                 </Button>
               </SignUpButton>
-              <SignInButton mode="modal">
+              <SignInButton
+                mode="modal"
+                fallbackRedirectUrl="/learn"
+                signUpFallbackRedirectUrl="/learn"
+              >
                 <Button size="lg" variant="secondaryOutline" className="w-full">
                   I already have an account
                 </Button>
