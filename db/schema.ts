@@ -23,9 +23,11 @@ export const userProgress = pgTable("user_progress", {
   userId: text("user_id").primaryKey(),
   userName: text("user_name").notNull().default("User"),
   userImageSrc: text("user_image_src").notNull().default("/mascot.svg"),
-  activeCourseId: integer("active_course_id").references(() => courses.id, {
-    onDelete: "cascade",
-  }),
+  activeCourseId: integer("active_course_id")
+    .references(() => courses.id, {
+      onDelete: "cascade",
+    })
+    .notNull(),
   hearts: integer("hearts").notNull().default(5),
   points: integer("points").notNull().default(0),
 });
@@ -52,7 +54,7 @@ export const unitsRelations = relations(units, ({ many, one }) => ({
     fields: [units.courseId],
     references: [courses.id],
   }),
-  lesson: many(lessons),
+  lessons: many(lessons),
 }));
 
 export const lessons = pgTable("lessons", {
@@ -90,7 +92,7 @@ export const challengesRelation = relations(challenges, ({ one, many }) => ({
     references: [lessons.id],
   }),
   challengeOptions: many(challengeOptions),
-  challengeProgress: many(challengeProgress)
+  challengeProgress: many(challengeProgress),
 }));
 
 export const challengeOptions = pgTable("challenge_options", {
@@ -122,3 +124,13 @@ export const challengeProgress = pgTable("challenge_progress", {
     .notNull(),
   completed: boolean("completed").notNull().default(false),
 });
+
+export const challengeProgressRelations = relations(
+  challengeProgress,
+  ({ one }) => ({
+    challenge: one(challenges, {
+      fields: [challengeProgress.challengeId],
+      references: [challenges.id],
+    }),
+  })
+);
